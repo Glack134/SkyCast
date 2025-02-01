@@ -1,1 +1,2 @@
 port: "8080"
+weather_api_key: "9e19c5e6f40335a0141f7a4b02f9a0d1"
