@@ -1,18 +1,27 @@
 package handler
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/Glack134/SkyCast/pkg/service"
+	"github.com/gin-gonic/gin"
+)
 
 type Handler struct {
-	WeatherHandler *WeatherHandler
+	services *service.Service
 }
 
-func (h *Handler) InitRoutes() *gin.Engine {
+func NewHandler(services *service.Service) *Handler {
+	return &Handler{services: services}
+}
+
+func (h *Handler) InitRouter(c *gin.Context) {
 	router := gin.New()
 
-	weather := router.Group("/main")
+	main := router.Group("/")
 	{
-		weather.GET("/", h.WeatherHandler.Main)
-		weather.GET("/search", h.WeatherHandler.Search)
+		search := main.Group("/search")
+		{
+			search.GET("/Sky", h.SkyBlue)
+			search.GET("/search", h.Search)
+		}
 	}
-	return router
 }

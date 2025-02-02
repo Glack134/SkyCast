@@ -3,26 +3,14 @@ package main
 import (
 	"log"
 
-	"github.com/Glack134/ScyCast"
-	"github.com/Glack134/ScyCast/pkg/handler"
-	"github.com/Glack134/ScyCast/pkg/service"
+	skycast "github.com/Glack134/SkyCast"
 	"github.com/spf13/viper"
 )
 
 func main() {
-	if err := initConfig(); err != nil {
-		log.Fatalf("error initialization configs: %s", err.Error())
-	}
-
-	weatherService := service.NewWeatherService(viper.GetString("weather_api_key"))
-	weatherHandler := handler.NewWeatherHandler(weatherService)
-
-	mainHandler := new(handler.Handler)
-	mainHandler.WeatherHandler = weatherHandler
-
-	srv := new(ScyCast.Server)
-	if err := srv.Run(viper.GetString("port"), mainHandler.InitRoutes()); err != nil {
-		log.Fatalf("running server %s", err.Error())
+	srv := new(skycast.Server)
+	if err := srv.Run("8080"); err != nil {
+		log.Fatalf("error occured while running http server: %s", err.Error())
 	}
 }
 
