@@ -4,12 +4,18 @@ import (
 	"log"
 
 	skycast "github.com/Glack134/SkyCast"
+	"github.com/Glack134/SkyCast/pkg/handler"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
 func main() {
+	logrus.SetFormatter(new(logrus.JSONFormatter))
+
+	handlers := new(handler.Handler)
+
 	srv := new(skycast.Server)
-	if err := srv.Run("8080"); err != nil {
+	if err := srv.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
 		log.Fatalf("error occured while running http server: %s", err.Error())
 	}
 }

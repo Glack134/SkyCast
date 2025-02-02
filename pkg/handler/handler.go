@@ -13,7 +13,7 @@ func NewHandler(services *service.Service) *Handler {
 	return &Handler{services: services}
 }
 
-func (h *Handler) InitRouter(c *gin.Context) {
+func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
 
 	main := router.Group("/")
@@ -24,4 +24,5 @@ func (h *Handler) InitRouter(c *gin.Context) {
 			search.GET("/search", h.Search)
 		}
 	}
+	return router
 }
