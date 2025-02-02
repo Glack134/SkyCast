@@ -12,6 +12,10 @@ import (
 func main() {
 	logrus.SetFormatter(new(logrus.JSONFormatter))
 
+	if err := initConfig(); err != nil {
+		log.Fatalf("error initializing configs: %s", err.Error())
+	}
+
 	handlers := new(handler.Handler)
 
 	srv := new(skycast.Server)
